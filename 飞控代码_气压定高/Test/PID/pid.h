@@ -10,6 +10,10 @@ typedef struct
 	float kd;
 	float last_err;
 	float accumulate_err;
+	float p_out;
+	float i_out;
+	float d_out;
+	float out_limit;
 }PID_Creat;
 
 int pitch_balance(float Angle,short gyro);

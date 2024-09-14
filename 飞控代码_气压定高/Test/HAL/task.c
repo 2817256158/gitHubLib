@@ -17,7 +17,7 @@ void fresh_motor_output()
 }
 void message_send()
 {
-    printf("samples:%d,%d,%d,%d,%d\r\n",Motor_Speed_Pwm1,Motor_Speed_Pwm2,Motor_Speed_Pwm3,Motor_Speed_Pwm4,Motor_Run);
+    printf("samples:%f,%f,%f,%f,%d,%d\r\n",gyro_pid_pitch.p_out, gyro_pid_pitch.d_out, gyro_pid_roll.p_out, gyro_pid_roll.d_out, Pitch_pwm, Roll_pwm);
 }
 void fresh_spl06_data()
 {

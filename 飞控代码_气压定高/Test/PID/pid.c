@@ -6,12 +6,12 @@
 /*Yaw只用了单级PID*/
 /*一级参数*/
 /*-80 -0.01 -0.0*/
-float Kp_pitch_balance=-20;
-float Kd_pitch_balance=-0.01;
+float Kp_pitch_balance=-40;
+float Kd_pitch_balance=-0.1;
 float Ki_pitch_balance=-0.0;
 /*-80 -0.01 -0.0*/
-float Kp_roll_balance=-20;
-float Kd_roll_balance=-0.01;
+float Kp_roll_balance=-40;
+float Kd_roll_balance=-0.1;
 float Ki_roll_balance=-0.0;
 /*20 0.。8 0.0*/
 // float Kp_yaw_balance=30.0;
@@ -22,16 +22,16 @@ float Kd_yaw_balance=-0.0;
 float Ki_yaw_balance=-0.0;
 /*二级参数*/
 /*0.85 3.80 0.0*/
-float Kp_gyroy_balance_v2=0.75;
-float Kd_gyroy_balance_v2=3.40;
+float Kp_gyroy_balance_v2=0.85;
+float Kd_gyroy_balance_v2=3.80;
 float Ki_gyroy_balance_v2=0.0;
 /*0.85 3.80 0.0*/
-float Kp_gyrox_balance_v2=0.75;
-float Kd_gyrox_balance_v2=3.40;
+float Kp_gyrox_balance_v2=0.85;
+float Kd_gyrox_balance_v2=3.80;
 float Ki_gyrox_balance_v2=0.0;
 /*0.65 2.8 0.0*/
-float Kp_gyroz_balance_v2=0.65;
-float Kd_gyroz_balance_v2=2.80;
+float Kp_gyroz_balance_v2=0.85;
+float Kd_gyroz_balance_v2=3.80;
 float Ki_gyroz_balance_v2=0.0;
 
 float gyrox_accumulate_err=0.0f;
@@ -47,9 +47,9 @@ float aim_pitch=0.0;
 float aim_roll=0.0;
 float aim_yaw=0.0;
 
-extern volatile float P;
-extern volatile float I;
-extern volatile float D;
+extern int P;
+extern int I;
+extern int D;
 
 int pitch_balance(float Angle,short gyro)
 {
@@ -134,6 +134,7 @@ int PID_Version2(int ex_value,short re_value,int num)/*0:gyrox 1:gyroy 2:gyroz*/
     return pwm_out; 
 }
 
+
 float PID_Control(PID_Creat*object, float expect_val, float real_val)
 {
 	float PID_Out=0;
@@ -141,7 +142,13 @@ float PID_Control(PID_Creat*object, float expect_val, float real_val)
 	object->accumulate_err+=err;
 	if(object->accumulate_err > 1000 )object->accumulate_err = 1000;
 	if(object->accumulate_err < -1000 )object->accumulate_err = -1000;
-	PID_Out = object->kp * err + object->ki * object->accumulate_err + object->kd * (err - object->last_err);
+    object->p_out = object->kp * err;
+    object->i_out = object->ki * object->accumulate_err;
+    object->d_out = object->kd * (err - object->last_err);
+	PID_Out = object->p_out + object->i_out + object->d_out;
 	object->last_err=err;
+    /*输出限幅*/
+    if(PID_Out > object->out_limit)PID_Out = object->out_limit;
+    if(PID_Out < object->out_limit*-1.0)PID_Out = object->out_limit*-1.0;
 	return PID_Out;
 }

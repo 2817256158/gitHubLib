@@ -40,7 +40,7 @@ void spl0601_write(uint8_t hwadr, uint8_t regadr, uint8_t val)
 uint8_t spl0601_read(uint8_t hwadr, uint8_t regadr)
 {
     static uint8_t val = 0;
-     HAL_I2C_Mem_Read(&hi2c2,hwadr<<1,regadr,I2C_MEMADD_SIZE_8BIT,&val,1,100);
+    HAL_I2C_Mem_Read(&hi2c2,hwadr<<1,regadr,I2C_MEMADD_SIZE_8BIT,&val,1,100);
     return val;
 }
 
@@ -62,6 +62,7 @@ void spl0601_init(void)
     p_spl0601->chip_id = temp;
     printf("ID:0x%x\r\n",temp);
     spl0601_get_calib_param();
+    printf("ID OK\r\n");
     // sampling rate = 4Hz; Pressure oversample = 32;
     spl0601_rateset(PRESSURE_SENSOR,128, 32);   
     // sampling rate = 4Hz; Temperature oversample = 32; 
@@ -197,36 +198,45 @@ void spl0601_get_calib_param(void)
     uint32_t l;
     h =  spl0601_read(HW_ADR, 0x10);
     l  =  spl0601_read(HW_ADR, 0x11);
+    printf("1\r\n");
     p_spl0601->calib_param.c0 = (int16_t)h<<4 | l>>4;
     p_spl0601->calib_param.c0 = (p_spl0601->calib_param.c0&0x0800)?(0xF000|p_spl0601->calib_param.c0):p_spl0601->calib_param.c0;
     h =  spl0601_read(HW_ADR, 0x11);
     l  =  spl0601_read(HW_ADR, 0x12);
+    printf("2\r\n");
     p_spl0601->calib_param.c1 = (int16_t)(h&0x0F)<<8 | l;
     p_spl0601->calib_param.c1 = (p_spl0601->calib_param.c1&0x0800)?(0xF000|p_spl0601->calib_param.c1):p_spl0601->calib_param.c1;
     h =  spl0601_read(HW_ADR, 0x13);
     m =  spl0601_read(HW_ADR, 0x14);
     l =  spl0601_read(HW_ADR, 0x15);
+    printf("3\r\n");
     p_spl0601->calib_param.c00 = (int32_t)h<<12 | (int32_t)m<<4 | (int32_t)l>>4;
     p_spl0601->calib_param.c00 = (p_spl0601->calib_param.c00&0x080000)?(0xFFF00000|p_spl0601->calib_param.c00):p_spl0601->calib_param.c00;
     h =  spl0601_read(HW_ADR, 0x15);
     m =  spl0601_read(HW_ADR, 0x16);
     l =  spl0601_read(HW_ADR, 0x17);
+    printf("4\r\n");
     p_spl0601->calib_param.c10 = (int32_t)(h&0x0F)<<16 | (int32_t)m<<8 | l;
     p_spl0601->calib_param.c10 = (p_spl0601->calib_param.c10&0x080000)?(0xFFF00000|p_spl0601->calib_param.c10):p_spl0601->calib_param.c10;
     h =  spl0601_read(HW_ADR, 0x18);
     l  =  spl0601_read(HW_ADR, 0x19);
+    printf("5\r\n");
     p_spl0601->calib_param.c01 = (int16_t)h<<8 | l;
     h =  spl0601_read(HW_ADR, 0x1A);
     l  =  spl0601_read(HW_ADR, 0x1B);
+    printf("6\r\n");
     p_spl0601->calib_param.c11 = (int16_t)h<<8 | l;
     h =  spl0601_read(HW_ADR, 0x1C);
     l  =  spl0601_read(HW_ADR, 0x1D);
+    printf("7\r\n");
     p_spl0601->calib_param.c20 = (int16_t)h<<8 | l;
     h =  spl0601_read(HW_ADR, 0x1E);
     l  =  spl0601_read(HW_ADR, 0x1F);
+    printf("8\r\n");
     p_spl0601->calib_param.c21 = (int16_t)h<<8 | l;
     h =  spl0601_read(HW_ADR, 0x20);
     l  =  spl0601_read(HW_ADR, 0x21);
+    printf("9\r\n");
     p_spl0601->calib_param.c30 = (int16_t)h<<8 | l;
 }
 

@@ -66,9 +66,16 @@ uint8_t USART2_Rx_Byte;//openmv数据
 /*全局气压数据*/
 float spl06_pressure;//大气压
 float spl06_speed;
+/*全局姿态环PID参数*/
+PID_Creat posture_pid_pitch={-80.0f, -0.0f, -0.01f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,10000.0f};//外环输出限幅无所谓 内环进行限制
+PID_Creat gyro_pid_pitch={0.80f, 0.0f, 3.8f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3000.0f};//输出限幅 把姿态控制区间限制在+-3000内
+PID_Creat posture_pid_roll={-80.0f, -0.0f, -0.01f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 10000.0f};
+PID_Creat gyro_pid_roll={0.80f, 0.0f, 3.8f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3000.0f};
+PID_Creat posture_pid_yaw={-80.0f, -0.0f, -0.01f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 10000.0f};
+PID_Creat gyro_pid_yaw={0.80f, 0.0f, 3.8f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3000.0f};
 /*全局高度环PID参数*/
-PID_Creat spl06_pid_1={0.0f,0.0f,0.0f,0.0f,0.0f};
-PID_Creat spl06_pid_2={100.0f,0.0f,0.0f,0.0f,0.0f};
+PID_Creat spl06_pid_1={0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4000.0f};
+PID_Creat spl06_pid_2={100.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4000.0f};
 
 /* USER CODE END PTD */
 
@@ -140,7 +147,7 @@ int main(void)
   system_peripheral_init();
   //---------------Debug模式-----------------//
   #if Debug
-
+  Motor_Run=1;
   #endif
   //Motor_Run = 1;
   /* USER CODE END 2 */

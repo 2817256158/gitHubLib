@@ -24,8 +24,17 @@ extern volatile int Motor_Speed_Pwm2;
 extern volatile int Motor_Speed_Pwm3;
 extern volatile int Motor_Speed_Pwm4;   
 
+
+extern PID_Creat posture_pid_pitch;
+extern PID_Creat gyro_pid_pitch;
+extern PID_Creat posture_pid_roll;
+extern PID_Creat gyro_pid_roll;
+extern PID_Creat posture_pid_yaw;
+extern PID_Creat gyro_pid_yaw;
+
 extern PID_Creat spl06_pid_1;
 extern PID_Creat spl06_pid_2;
+
 
 void fresh_motor_output(void);//更新电机输出
 void message_send(void);//串口任务发送任务

@@ -28,4 +28,4 @@ test/filter.o: ..\HAL\filter.c ..\HAL\filter.h ..\HAL\config.h \
   ..\peripheralDriver\Motor\motor.h ..\peripheralDriver\mpu6050\dmpkey.h \
   ..\peripheralDriver\mpu6050\inv_mpu.h \
   ..\peripheralDriver\SPL06\spl06001.h ..\HAL\interruptProcess.h \
-  ..\HAL\systeminit.h ..\HAL\uartProcess.h ..\PID\pid.h ..\HAL\task.h
+  ..\PID\pid.h ..\HAL\systeminit.h ..\HAL\uartProcess.h ..\HAL\task.h

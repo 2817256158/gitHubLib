@@ -28,5 +28,5 @@ test/uartprocess.o: ..\HAL\uartProcess.c ..\HAL\uartprocess.h \
   ..\peripheralDriver\Motor\motor.h ..\peripheralDriver\mpu6050\dmpkey.h \
   ..\peripheralDriver\mpu6050\inv_mpu.h \
   ..\peripheralDriver\SPL06\spl06001.h ..\HAL\filter.h \
-  ..\HAL\interruptProcess.h ..\HAL\systeminit.h ..\PID\pid.h \
+  ..\HAL\interruptProcess.h ..\PID\pid.h ..\HAL\systeminit.h \
   ..\HAL\task.h

@@ -2,6 +2,7 @@
 #define INTERRUPTPROCESS_H
 
 #include "config.h"
+#include "pid.h"
 
 /*外部全局变量*/
 extern volatile uint8_t MPU6050_Ready;
@@ -20,6 +21,13 @@ extern volatile int Motor_Speed_Pwm2;
 extern volatile int Motor_Speed_Pwm3;
 extern volatile int Motor_Speed_Pwm4;
 extern volatile int Motor_Base_Pwm;
+
+extern PID_Creat posture_pid_pitch;
+extern PID_Creat gyro_pid_pitch;
+extern PID_Creat posture_pid_roll;
+extern PID_Creat gyro_pid_roll;
+extern PID_Creat posture_pid_yaw;
+extern PID_Creat gyro_pid_yaw;
 
 extern volatile uint8_t MPU6050_Ready;
 extern volatile uint8_t Motor_Ready;

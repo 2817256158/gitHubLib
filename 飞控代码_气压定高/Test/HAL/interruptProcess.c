@@ -8,10 +8,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     mpu_dmp_get_data(&Roll, &Pitch, &Yaw);
     MPU_Get_Gyroscope(&Gyroy, &Gyrox, &Gyroz);
     MPU6050_Calibration(Aacx,Aacy,Aacz,Gyrox,Gyroy,Gyroz);//未校正则开始校正
-      
+
+    Pitch_pwm = PID_Control(&gyro_pid_pitch, PID_Control(&posture_pid_pitch, 0.0f, Pitch), (float)(Gyroy*-1.0));
+    Roll_pwm = PID_Control(&gyro_pid_roll, PID_Control(&posture_pid_roll, 0.0f, Roll), (float)(Gyrox*-1.0));
+    #if 0
     Yaw_pwm = PID_Version2(yaw_balance(Yaw,(short)(Gyroz)*-1.0),Gyroz,2);
     Pitch_pwm = PID_Version2(pitch_balance(Pitch,(short)(Gyroy)*-1.0),Gyroy,1);
     Roll_pwm = PID_Version2(roll_balance(Roll,(short)(Gyroz)*-1.0),Gyrox,0);
+    #endif
   }                                                                                                                     
   UNUSED(GPIO_Pin);
 }

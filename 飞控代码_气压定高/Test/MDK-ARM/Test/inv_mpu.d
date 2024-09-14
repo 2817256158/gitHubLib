@@ -29,5 +29,5 @@ test/inv_mpu.o: ..\peripheralDriver\mpu6050\inv_mpu.c \
   ..\Inc\gpio.h ..\peripheralDriver\E49\e49.h \
   ..\peripheralDriver\Motor\motor.h ..\peripheralDriver\mpu6050\dmpkey.h \
   ..\peripheralDriver\SPL06\spl06001.h ..\HAL\filter.h \
-  ..\HAL\interruptProcess.h ..\HAL\systeminit.h ..\HAL\uartProcess.h \
-  ..\PID\pid.h ..\HAL\task.h
+  ..\HAL\interruptProcess.h ..\PID\pid.h ..\HAL\systeminit.h \
+  ..\HAL\uartProcess.h ..\HAL\task.h
