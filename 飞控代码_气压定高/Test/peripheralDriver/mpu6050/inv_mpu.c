@@ -3085,6 +3085,7 @@ u8 MPU_Get_Gyroscope(short *gx,short *gy,short *gz)
     return res;
 }
 //得到加速度值(原始值)
+//范围:+-2G
 //gx,gy,gz:陀螺仪x,y,z轴的原始读数(带符号)
 //返回值:0,成功
 //    其他,错误代码
@@ -3097,13 +3098,16 @@ u8 MPU_Get_Accelerometer(float *ax,float *ay,float *az)
     #if 1
         if(res==0)
         {
-            accel_databuff[0] = (((int16_t)buf[1]<< 8) | buf[0]);//-calibration_value_accel[0];	
-	        accel_databuff[1] = (((int16_t)buf[3]<< 8) | buf[2]);//-calibration_value_accel[1];			
-	        accel_databuff[2] = (((int16_t)buf[5]<< 8) | buf[4]);//-calibration_value_accel[2];
+            // accel_databuff[0] = (((int16_t)buf[1]<< 8) | buf[0]);//-calibration_value_accel[0];	
+	        // accel_databuff[1] = (((int16_t)buf[3]<< 8) | buf[2]);//-calibration_value_accel[1];			
+	        // accel_databuff[2] = (((int16_t)buf[5]<< 8) | buf[4]);//-calibration_value_accel[2];
+            accel_databuff[0] = (((int16_t)buf[0]<< 8) | buf[1]);//-calibration_value_accel[0];	
+	        accel_databuff[1] = (((int16_t)buf[2]<< 8) | buf[3]);//-calibration_value_accel[1];			
+	        accel_databuff[2] = (((int16_t)buf[4]<< 8) | buf[5]);//-calibration_value_accel[2];
         }
     
     #endif
-    /*对角加速度进行卡尔曼滤波*/
+    /*对加速度进行卡尔曼滤波*/
     #if 0
         kalman_Filter(&Kalman_Struct[0],(float)accel_databuff[0]);
         accel_databuff[0]=(int16_t)Kalman_Struct[0].out;
@@ -3112,9 +3116,18 @@ u8 MPU_Get_Accelerometer(float *ax,float *ay,float *az)
         kalman_Filter(&Kalman_Struct[2],(float)accel_databuff[2]);
         accel_databuff[2]=(int16_t)Kalman_Struct[2].out;
     #endif
-    *ax=(float)(accel_databuff[0]-calibration_value_accel[0]);
-    *ay=(float)(accel_databuff[1]-calibration_value_accel[1]);
-    *az=(float)(accel_databuff[2]-calibration_value_accel[2]);
+    /*对加速度进行低通滤波*/
+    #if 1
+    static int16_t last_accel0=0;
+    static int16_t last_accel1=0;
+    static int16_t last_accel2=0;
+    accel_databuff[0]= last_accel0 *0.6 + accel_databuff[0]*0.4;
+    accel_databuff[1]= last_accel1 *0.6 + accel_databuff[1]*0.4;
+    accel_databuff[2]= last_accel2 *0.6 + accel_databuff[2]*0.4;
+    #endif
+    *ax=(float)(accel_databuff[0]);
+    *ay=(float)(accel_databuff[1]);
+    *az=(float)(accel_databuff[2]);
     return res;
 }
 

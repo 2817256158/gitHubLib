@@ -147,9 +147,8 @@ int main(void)
   system_peripheral_init();
   //---------------Debug模式-----------------//
   #if Debug
-  Motor_Run=1;
+  Motor_Run=0;
   #endif
-  //Motor_Run = 1;
   /* USER CODE END 2 */
 
   /* Infinite loop */

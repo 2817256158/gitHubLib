@@ -7,6 +7,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     /*mpu6050姿态计算必须放中断 保证数据的实时性*/
     mpu_dmp_get_data(&Roll, &Pitch, &Yaw);
     MPU_Get_Gyroscope(&Gyroy, &Gyrox, &Gyroz);
+    MPU_Get_Accelerometer(&Aacx,&Aacy,&Aacz);
+    
     MPU6050_Calibration(Aacx,Aacy,Aacz,Gyrox,Gyroy,Gyroz);//未校正则开始校正
 
     Pitch_pwm = PID_Control(&gyro_pid_pitch, PID_Control(&posture_pid_pitch, 0.0f, Pitch), (float)(Gyroy*-1.0));

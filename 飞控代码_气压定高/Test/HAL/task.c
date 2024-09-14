@@ -3,7 +3,7 @@
 uint16_t Task_Sum=5;
 /*运行状态 ：任务ID ： 运行时间 ：函数指针 : 强制挂起*/
 Task_Creat Task_List[10]={    
-    {0,1,20,message_send,1},//串口任务发送任务
+    {0,1,20,message_send,0},//串口任务发送任务
     {0,2,4,fresh_motor_output,0},//更新电机输出
 	{0,3,25,fresh_spl06_data,0}, //更新spl06气压数据
     {0,4,30,fresh_pid_output,0},//更新PID输出
@@ -17,7 +17,8 @@ void fresh_motor_output()
 }
 void message_send()
 {
-    printf("samples:%f,%f,%f,%f,%d,%d\r\n",gyro_pid_pitch.p_out, gyro_pid_pitch.d_out, gyro_pid_roll.p_out, gyro_pid_roll.d_out, Pitch_pwm, Roll_pwm);
+    //printf("samples:%f,%f,%f,%f,%d,%d\r\n",gyro_pid_pitch.p_out, gyro_pid_pitch.d_out, gyro_pid_roll.p_out, gyro_pid_roll.d_out, Pitch_pwm, Roll_pwm);
+    printf("samples:%f,%f,%f,%f\r\n",spl06_pressure,Aacx,Aacy,Aacz*2*9.79/32768);
 }
 void fresh_spl06_data()
 {

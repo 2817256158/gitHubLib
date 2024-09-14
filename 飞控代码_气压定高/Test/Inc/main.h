@@ -74,7 +74,7 @@ void HAL_UART_IDLECallBack_USER(UART_HandleTypeDef *huart);
 #define IIC_SDA_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-#define Debug 0
+#define Debug 1
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
