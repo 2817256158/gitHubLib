@@ -35,6 +35,7 @@ extern PID_Creat gyro_pid_yaw;
 extern PID_Creat spl06_pid_1;
 extern PID_Creat spl06_pid_2;
 
+extern uint8_t User_Debug;
 
 void fresh_motor_output(void);//更新电机输出
 void message_send(void);//串口任务发送任务

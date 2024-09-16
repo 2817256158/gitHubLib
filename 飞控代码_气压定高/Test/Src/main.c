@@ -46,7 +46,7 @@ volatile int Motor_Speed_Pwm1 = 0;//电机四轴实际PWM输出变量
 volatile int Motor_Speed_Pwm2 = 0;
 volatile int Motor_Speed_Pwm3 = 0;
 volatile int Motor_Speed_Pwm4 = 0;
-volatile int Motor_Base_Pwm = 0;//油门
+volatile int Motor_Base_Pwm = 1000;//油门
 /*全局外设就绪变量*/
 volatile uint8_t MPU6050_Ready = 0;
 volatile uint8_t Motor_Run = 0;
@@ -67,16 +67,18 @@ uint8_t USART2_Rx_Byte;//openmv数据
 float spl06_pressure;//大气压
 float spl06_speed;
 /*全局姿态环PID参数*/
-PID_Creat posture_pid_pitch={-80.0f, -0.0f, -0.01f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,10000.0f};//外环输出限幅无所谓 内环进行限制
-PID_Creat gyro_pid_pitch={0.80f, 0.0f, 3.8f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3000.0f};//输出限幅 把姿态控制区间限制在+-3000内
-PID_Creat posture_pid_roll={-80.0f, -0.0f, -0.01f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 10000.0f};
-PID_Creat gyro_pid_roll={0.80f, 0.0f, 3.8f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3000.0f};
-PID_Creat posture_pid_yaw={-80.0f, -0.0f, -0.01f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 10000.0f};
-PID_Creat gyro_pid_yaw={0.80f, 0.0f, 3.8f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3000.0f};
+PID_Creat posture_pid_pitch={-0.0f, -0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,10000.0f};//外环输出限幅无所谓 内环进行限制
+PID_Creat gyro_pid_pitch={0.34f, 0.0f, 1.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3000.0f};//输出限幅 把姿态控制区间限制在+-3000内
+PID_Creat posture_pid_roll={-0.0f, -0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 10000.0f};
+PID_Creat gyro_pid_roll={0.34f, 0.0f, 1.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3000.0f};
+PID_Creat posture_pid_yaw={-0.0f, -0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 10000.0f};
+PID_Creat gyro_pid_yaw={0.85f, 0.0f, 2.8f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3000.0f};
 /*全局高度环PID参数*/
 PID_Creat spl06_pid_1={0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4000.0f};
 PID_Creat spl06_pid_2={100.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4000.0f};
 
+/*DEBUG*/
+uint8_t User_Debug = 0;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -146,8 +148,8 @@ int main(void)
   //---------------开始系统初始化-----------------//
   system_peripheral_init();
   //---------------Debug模式-----------------//
-  #if Debug
-  Motor_Run=0;
+  #if User_Debug
+  Motor_Run=1;
   #endif
   /* USER CODE END 2 */
 

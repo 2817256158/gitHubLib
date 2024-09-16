@@ -43,6 +43,8 @@ extern UART_HandleTypeDef huart2;
 void MX_USART1_UART_Init(void);
 void MX_USART2_UART_Init(void);
 
+extern uint8_t User_Debug;
+
 /* USER CODE BEGIN Prototypes */
 
 /* USER CODE END Prototypes */

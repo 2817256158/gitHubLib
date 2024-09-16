@@ -18,7 +18,7 @@ void fresh_motor_output()
 void message_send()
 {
     //printf("samples:%f,%f,%f,%f,%d,%d\r\n",gyro_pid_pitch.p_out, gyro_pid_pitch.d_out, gyro_pid_roll.p_out, gyro_pid_roll.d_out, Pitch_pwm, Roll_pwm);
-    printf("samples:%f,%f,%f,%f\r\n",spl06_pressure,Aacx,Aacy,Aacz*2*9.79/32768);
+    if(User_Debug == 1)printf("samples:%f,%f,%d,%d,%d,%d,%d\r\n",Pitch,Roll,Motor_Speed_Pwm1,Motor_Speed_Pwm2,Motor_Speed_Pwm3,Motor_Speed_Pwm4,Gyroy);
 }
 void fresh_spl06_data()
 {
@@ -39,7 +39,7 @@ void fresh_pid_output(void)
     static int High_Lock=0;
     static int place_Lock=0;
     static int zitai_Lock=1;
-    static int base_value[4]={150,130,160,150};
+    static int base_value[4]={0,0,0,0};
     Motor_Speed_Pwm1 = Motor_Base_Pwm*Oil_Lock + base_value[0] + Roll_pwm*zitai_Lock - Pitch_pwm*zitai_Lock - Yaw_pwm*zitai_Lock + High_Pwm*High_Lock;
     Motor_Speed_Pwm2 = Motor_Base_Pwm*Oil_Lock + base_value[1] - Roll_pwm*zitai_Lock - Pitch_pwm*zitai_Lock + Yaw_pwm*zitai_Lock + High_Pwm*High_Lock;
     Motor_Speed_Pwm3 = Motor_Base_Pwm*Oil_Lock + base_value[2] - Roll_pwm*zitai_Lock + Pitch_pwm*zitai_Lock - Yaw_pwm*zitai_Lock + High_Pwm*High_Lock;

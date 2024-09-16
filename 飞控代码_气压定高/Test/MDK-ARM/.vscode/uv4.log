@@ -1,8 +1,10 @@
 *** Using Compiler 'V6.22', folder: 'D:\CodeControl\MDK\ARM\code\ARM\ARMCLANG\Bin'
 Build target 'Test'
-compiling inv_mpu.c...
-linking...
-Program Size: Code=40840 RO-data=3988 RW-data=460 ZI-data=1940  
-FromELF: creating hex file...
-"Test\Test.axf" - 0 Error(s), 0 Warning(s).
+../HAL/task.c(6): error: initializer element is not a compile-time constant
+    6 |     {0,1,20,message_send,User_Debug},//串口任务发送任务
+      |                          ^~~~~~~~~~
+1 error generated.
+compiling task.c...
+"Test\Test.axf" - 1 Error(s), 0 Warning(s).
+Target not created.
 Build Time Elapsed:  00:00:01

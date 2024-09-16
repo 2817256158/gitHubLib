@@ -19,7 +19,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "usart.h"
-
+#include "main.h"
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
@@ -27,6 +27,8 @@
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 DMA_HandleTypeDef hdma_usart2_tx;
+
+extern uint8_t User_Debug;
 
 /* USART1 init function */
 
@@ -41,12 +43,13 @@ void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  #if !Debug
-  huart1.Init.BaudRate = 9600;
-  #endif
-  #if Debug
-  huart1.Init.BaudRate = 115200;
-  #endif
+//  #if !User_Debug
+//  huart1.Init.BaudRate = 9600;
+//  #endif
+//  #if User_Debug
+//  huart1.Init.BaudRate = 115200;
+//  #endif
+	huart1.Init.BaudRate = 9600;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
